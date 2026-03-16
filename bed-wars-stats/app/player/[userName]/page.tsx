@@ -6,27 +6,41 @@ import { BedwarsProfile, parseBedwars } from "@/types";
 import BedwarsStatsTable from "@/components/bedwarsStatsTable";
 import { Card } from "@heroui/card";
 import { Spinner } from "@heroui/spinner";
+
 export default function PlayerPage() {
   const params = useParams();
   const userName = params.userName;
+
   const [playerSkin, setPlayerSkin] = useState("");
   const [playerUuid, setPlayerUuid] = useState("");
   const [playerStats, setPlayerStats] = useState<BedwarsProfile>();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
   useEffect(() => {
     if (!userName) return;
 
     setIsLoading(true);
+    setError(null);
 
     fetch(`/api/playerSession/${userName}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch player session");
+        return res.json();
+      })
       .then((data) => {
         const uuid = data.id;
         setPlayerUuid(uuid);
 
         return Promise.all([
-          fetch(`/api/playerUuid/${uuid}`).then((res) => res.json()),
-          fetch(`/api/hypixel/player/${uuid}`).then((res) => res.json()),
+          fetch(`/api/playerUuid/${uuid}`).then((res) => {
+            if (!res.ok) throw new Error("Failed to fetch player UUID");
+            return res.json();
+          }),
+          fetch(`/api/hypixel/player/${uuid}`).then((res) => {
+            if (!res.ok) throw new Error("Failed to fetch player stats");
+            return res.json();
+          }),
         ]);
       })
       .then(([skinData, statsData]) => {
@@ -35,15 +49,25 @@ export default function PlayerPage() {
             const skin = JSON.parse(atob(skinData.properties[0].value));
             setPlayerSkin(skin.textures.SKIN?.url || "");
           } catch (err) {
-            console.error("Failed to parse skin:", err);
+            throw new Error("Error parsing player skin");
           }
+        }
+
+        if (!statsData.success) {
+          throw new Error("Error getting player stats");
         }
 
         setPlayerStats(parseBedwars(statsData.player.stats["Bedwars"]));
       })
-      .catch((err) => console.error("Failed to fetch player data:", err))
+      .catch((err) => {
+        console.error(err);
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+      })
       .finally(() => setIsLoading(false));
   }, [userName]);
+
+  if (error) throw error;
+
   return (
     <Card
       isBlurred
