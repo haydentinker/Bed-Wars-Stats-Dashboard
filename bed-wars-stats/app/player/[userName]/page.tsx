@@ -18,21 +18,18 @@ export default function PlayerPage() {
 
     setIsLoading(true);
 
-    // Step 1: Fetch UUID
     fetch(`/api/playerSession/${userName}`)
       .then((res) => res.json())
       .then((data) => {
         const uuid = data.id;
         setPlayerUuid(uuid);
 
-        // Step 2: Fetch skin and stats in parallel
         return Promise.all([
           fetch(`/api/playerUuid/${uuid}`).then((res) => res.json()),
           fetch(`/api/hypixel/player/${uuid}`).then((res) => res.json()),
         ]);
       })
       .then(([skinData, statsData]) => {
-        // Parse skin
         if (skinData.properties?.length > 0) {
           try {
             const skin = JSON.parse(atob(skinData.properties[0].value));
@@ -42,7 +39,6 @@ export default function PlayerPage() {
           }
         }
 
-        // Parse stats
         setPlayerStats(parseBedwars(statsData.player.stats["Bedwars"]));
       })
       .catch((err) => console.error("Failed to fetch player data:", err))

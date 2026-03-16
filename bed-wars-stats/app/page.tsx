@@ -23,10 +23,12 @@ export default function Home() {
     >
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg text-center justify-center">
-          {/* <span className={title()}>View your Hypixel Bedwars Stats </span>
-          <div className={subtitle({ class: "mt-4" })}>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            View your Hypixel Bedwars Stats
+          </h1>
+          <h2 className="text-lg font-bold text-white">
             Start by searching the player's username
-          </div> */}
+          </h2>
         </div>
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input

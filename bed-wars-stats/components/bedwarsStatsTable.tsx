@@ -9,7 +9,7 @@ import {
 } from "@heroui/table";
 import { Select, SelectItem } from "@heroui/select";
 import type { BedwarsProfile, BedwarsMode } from "../types";
-import { SkinViewerComponent } from "./minecraftSkin";
+import { MinecraftSkinViewer } from "./minecraftSkinViewer";
 
 const modes: { key: BedwarsMode; label: string }[] = [
   { key: "solo", label: "Solo" },
@@ -69,7 +69,6 @@ export default function BedwarsStatsTable({
 
   return (
     <div className="flex flex-col gap-4 px-4 sm:px-10">
-      {/* Mode Selector */}
       <Select
         label="Select BedWars Mode"
         selectedKeys={[mode]}
@@ -83,10 +82,9 @@ export default function BedwarsStatsTable({
         ))}
       </Select>
 
-      {/* Skin + Stats Table */}
       <div className="flex flex-col sm:flex-row sm:gap-6 gap-4 items-center sm:items-center">
         <div className="flex-shrink-0">
-          <SkinViewerComponent skinUrl={playerSkin} />
+          <MinecraftSkinViewer skinUrl={playerSkin} />
         </div>
 
         <div className="overflow-x-auto w-full">

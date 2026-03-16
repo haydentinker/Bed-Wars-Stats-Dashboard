@@ -44,7 +44,6 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-1 bg-transparent">
-              {/* flex-1 ensures main grows to fill remaining space */}
               <div className="w-full h-full">{children}</div>
             </main>
           </div>

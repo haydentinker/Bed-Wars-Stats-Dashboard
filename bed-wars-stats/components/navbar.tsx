@@ -28,7 +28,6 @@ export const Navbar = () => {
         justify="start"
         className="flex flex-wrap items-center gap-4 w-full"
       >
-        {/* Brand */}
         <NavbarBrand
           onClick={() => {
             router.push("/");
@@ -39,7 +38,6 @@ export const Navbar = () => {
           </p>
         </NavbarBrand>
 
-        {/* Search Form */}
         <form
           onSubmit={handleSubmit}
           className="flex flex-1 sm:flex-auto gap-2 items-center"
