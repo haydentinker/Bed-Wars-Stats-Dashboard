@@ -19,7 +19,7 @@ export default function Home() {
     <Card
       isBlurred
       shadow="sm"
-      className="border-none bg-background/60 dark:bg-default-100/50 max-w-4xl mx-auto w-full overflow-hidden p-4 sm:p-6 rounded-xl mb-10"
+      className="border-none bg-background/60 dark:bg-default-100/50 max-w-xl md:max-w-4xl mx-auto w-full overflow-hidden p-4 sm:p-6 rounded-xl mb-10"
     >
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg text-center justify-center">
