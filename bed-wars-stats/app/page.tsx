@@ -9,7 +9,7 @@ export default function Home() {
   const router = useRouter();
   const [value, setValue] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
     if (value.trim()) {
       router.push(`/player/${value}`);
     }
