@@ -2,10 +2,9 @@
 import { Image } from "@heroui/image";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
-import { title, subtitle } from "@/components/primitives";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { Card } from "@heroui/card";
 export default function Home() {
   const router = useRouter();
   const [value, setValue] = useState("");
@@ -17,38 +16,44 @@ export default function Home() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-lg text-center justify-center">
-        <span className={title()}>View your Hypixel Bedwars Stats </span>
-        <div className={subtitle({ class: "mt-4" })}>
-          Start by searching the player's username
+    <Card
+      isBlurred
+      shadow="sm"
+      className="border-none bg-background/60 dark:bg-default-100/50 max-w-4xl mx-auto w-full overflow-hidden p-4 sm:p-6 rounded-xl mb-10"
+    >
+      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+        <div className="inline-block max-w-lg text-center justify-center">
+          {/* <span className={title()}>View your Hypixel Bedwars Stats </span>
+          <div className={subtitle({ class: "mt-4" })}>
+            Start by searching the player's username
+          </div> */}
         </div>
-      </div>
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <Input
-          className="max-w-sm"
-          aria-label="Search"
-          classNames={{
-            inputWrapper: "bg-default-100",
-            input: "text-sm",
-          }}
-          size="md"
-          labelPlacement="outside"
-          placeholder="Enter username"
-          value={value}
-          onValueChange={setValue}
-          type="search"
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <Input
+            className="max-w-sm"
+            aria-label="Search"
+            classNames={{
+              inputWrapper: "bg-default-100",
+              input: "text-sm",
+            }}
+            size="md"
+            labelPlacement="outside"
+            placeholder="Enter username"
+            value={value}
+            onValueChange={setValue}
+            type="search"
+          />
+          <Button color="primary" size="sm" type="submit">
+            Search
+          </Button>
+        </form>
+        <Image
+          isBlurred
+          alt="HeroUI Album Cover"
+          src="/bedwars-banner.png"
+          width={400}
         />
-        <Button color="primary" size="sm" type="submit">
-          Search
-        </Button>
-      </form>
-      <Image
-        isBlurred
-        alt="HeroUI Album Cover"
-        src="/bedwars-banner.png"
-        width={400}
-      />
-    </section>
+      </section>
+    </Card>
   );
 }
